@@ -1,11 +1,7 @@
-/*
-Boukhemza Hocine 21327665
-Kaouane Walid
-*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "biblioLC.h"
+#include "../../Biblio/LC/biblioLC.h"
 
 Biblio* charger_n_entrees(char* nomfic, int n) {
     FILE *f = fopen(nomfic, "r");

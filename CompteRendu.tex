@@ -1,0 +1,117 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.18} 
+\usepackage{amsmath, amssymb, graphicx, tcolorbox, listings}
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\textbf{LU2IN006 - Structures de données}}
+\rhead{\textbf{page \thepage}}
+\fancyfoot[R]{\footnotesize Hocine Boukhemza} 
+\lstset{
+    language=Bash,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{green},
+    morekeywords={unsigned, int},
+    numbers=none, 
+    breaklines=true,
+    frame=none, 
+    backgroundcolor=\color{white} 
+}
+
+\begin{document}
+\hspace*{-1cm}\includegraphics[width=3cm]{su_logo.png}\\[0.5cm]
+\begin{center}
+    \textbf{\Large Mini-Projet 2}\\
+    \textbf{Gestion d’une biblioth`eque}\\
+\end{center}
+
+\section*{\textbf{\small Exercice 3 – Comparaison des deux structures}}
+
+\begin{enumerate}
+\item Voici les résultats de l'exécution de \texttt{question1exo3} avec une bibliothéque de taille \textbf{50000} :\\
+\begin{tcolorbox}
+\begin{lstlisting}[language=Bash]
+hocine@hocine-Blade-15-2022-RZ09-0421:~/projetC$ ./question1exo3
+ RECHERCHE NUM
+Le temps de recherche avec numero (cas livre present) pour une liste chainee est 0.8082640000s
+Le temps de recherche avec numero (cas livre present)pour une table de hachage est 0.0000000000s
+Le temps de recherche avec numero (cas livre absent) pour une liste chainee est 0.6492160000s
+Le temps de recherche avec numero (cas livre present)pour une table de hachage est 4.2088080000s
+
+
+ RECHERCHE TITRE
+Le temps de recherche avec titre (cas livre present) pour une liste chainee est 0.5126570000s
+Le temps de recherche avec titre (cas livre present)pour une table de hachage est 1.0841530000s
+Le temps de recherche avec titre (cas livre absent) pour une liste chainee est 0.6905530000s
+Le temps de recherche avec titre (cas livre absent)pour une table de hachage est 4.1610280000s
+
+ RECHERCHE AUTEUR
+Le temps de recherche avec auteur (cas livre present) pour une liste chainee est 0.7869080000s
+Le temps de recherche avec auteur (cas livre present)pour une table de hachage est 0.0026880000s
+Le temps de recherche avec auteur (cas livre absent) pour une liste chainee est 6.9588980000s
+Le temps de recherche avec auteur (cas livre absent)pour une table de hachage est 0.0091440000s
+\end{lstlisting}
+\end{tcolorbox}
+Avec une bibliothéque de taille \textbf{50000} la recherche suivant le numéro et la recherche suivant le titre sont plus rapides avec la bibliothéque sous forme de \textbf{liste chainée} et la recherche avec l'auteur est plus rapide avec la bibliothéque sous forme \textbf{table de hachage} car on définit la clé dans fonctionclef en fonction de l'auteur.
+
+
+\item Voici les résultats de l'exécution de \texttt{question1exo3} avec une bibliothéque de taille \textbf{100000} :\\
+\begin{tcolorbox}
+\begin{lstlisting}[language=Bash]
+hocine@hocine-Blade-15-2022-RZ09-0421:~/projetC$ ./question1exo3
+ RECHERCHE NUM
+Le temps de recherche avec numero (cas livre present) pour une liste chainee est 0.9294020000s
+Le temps de recherche avec numero (cas livre present)pour une table de hachage est 1.8955510000s
+Le temps de recherche avec numero (cas livre absent) pour une liste chainee est 1.0015460000s
+Le temps de recherche avec numero (cas livre present)pour une table de hachage est 8.7013710000s
+
+ RECHERCHE TITRE
+Le temps de recherche avec titre (cas livre present) pour une liste chainee est 1.1264500000s
+Le temps de recherche avec titre (cas livre present)pour une table de hachage est 2.4178980000s
+Le temps de recherche avec titre (cas livre absent) pour une liste chainee est 1.3475420000s
+Le temps de recherche avec titre (cas livre absent)pour une table de hachage est 9.0640540000s
+
+ RECHERCHE AUTEUR
+Le temps de recherche avec auteur (cas livre present) pour une liste chainee est 1.4004040000s
+Le temps de recherche avec auteur (cas livre present)pour une table de hachage est 0.0050680000s
+Le temps de recherche avec auteur (cas livre absent) pour une liste chainee est 13.8187790000s
+Le temps de recherche avec auteur (cas livre absent)pour une table de hachage est 0.0208060000s
+\end{lstlisting}
+\end{tcolorbox}
+Avec une bibliothéque de taille \textbf{100000}, on observe les memes résultats.Par ailleurs, le temps d'éxecution de la recherche selon l'auteur a très peu augmenté et reste proche de 0. Etant donné que l'ordinateur effectue 4.8 * 10^9  \text{opérations par secondes, alors la complexité de la recherche selon l'auteur avec une table de hachage est très faible.}
+
+
+\begin{center}
+    \begin{tikzpicture}
+        \begin{axis}[
+            title={Temps de calcul en fonction de i},
+            xlabel={Nombre d'entrées (i)},
+            ylabel={Temps (s)},
+            xmin=1000, xmax=50000,
+            ymin=0, ymax=5,
+            ytick={0,1,2,3,4,5},
+            grid=major,
+            legend pos=north west
+        ]
+
+        \addplot[blue, thick] table[x index=0, y index=1, col sep=tab] {tempscalculq3};
+        \addlegendentry{Liste Chaînée}
+
+        \addplot[red, thickg] table[x index=0, y index=2, col sep=tab] {tempscalculq3};
+        \addlegendentry{Table de Hachage}
+
+        \end{axis}
+    \end{tikzpicture}
+\end{center}
+
+\begin{enumerate}
+    \item[4]{Le temps de calcul pour la recherche en table de hachage est faible et croit très lentement car la complexité est de $O(1)$. Pour la représentation sous forme de liste chainée, il croit plus rapidement car la complexité de recherche est en $O(n^2)$.}
+\end{enumerate}
+\end{document}
